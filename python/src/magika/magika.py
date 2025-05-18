@@ -718,6 +718,9 @@ class Magika:
             return result, None
 
         elif seekable.size < self._model_config.min_file_size_for_dl:
+            """
+            如果文件大小小于模型配置中定义的 min_file_size_for_dl (深度学习所需的最小文件大小)，则认为文件太小，不适合用深度学习模型处理。
+            """
             content = seekable.read_at(0, seekable.size)
             result = self._get_result_from_few_bytes(content, path=path)
             return result, None
