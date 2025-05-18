@@ -699,6 +699,13 @@ class Magika:
         return a MagikaFeatures object. Note that for now we just collect the
         features instead of already performing inference because we want to use
         batching.
+
+        给定一个 Seekable 对象（它是 BinaryIO 的包装器），我们返回 MagikaOutput 或 MagikaFeatures。
+
+        有些极端情况不需要使用深度学习来获取输出；在这种情况下，我们直接返回 MagikaOutput 对象。
+
+        对于所有其他情况，我们确实需要使用深度学习，在这种情况下，我们返回 MagikaFeatures 对象。请注意，
+        由于我们想要使用批处理，因此目前我们只是收集特征，而不是执行推理。
         """
 
         if seekable.size == 0:
