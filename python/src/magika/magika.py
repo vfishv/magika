@@ -159,24 +159,24 @@ class Magika:
         seek() around the stream."""
 
         if not isinstance(stream, io.IOBase) or not stream.readable():  # type: ignore[unreachable]
-            raise TypeError("Input stream must be a readable BinaryIO object.")
+            raise TypeError("输入流必须是可读的 BinaryIO 对象.")
 
         # Explicitly test for the most common error so that we can return an
         # helpful error message.
         if isinstance(stream, io.TextIOBase):  # type: ignore[unreachable]
             raise TypeError(
-                "Input stream must be opened in bytes mode, not in text mode."
+                "输入流必须以字节模式打开，而不是以文本模式打开."
             )
 
         if not isinstance(stream, io.BufferedIOBase):
-            raise TypeError("Input stream must be a readable BinaryIO object.")
+            raise TypeError("输入流必须是可读的 BinaryIO 对象.")
 
         if (
             not hasattr(stream, "seek")
             or not hasattr(stream, "read")
             or not hasattr(stream, "tell")
         ):
-            raise TypeError("Input stream must have seek, read, and tell methods.")
+            raise TypeError("输入流必须具有 seek、read 和 tell 方法.")
 
         try:
             current_position = stream.tell()
