@@ -737,6 +737,7 @@ class Magika:
             )
             # Check whether we have enough bytes for a meaningful
             # detection, and not just padding.
+            # 检查是否有足够的字节进行有意义的检测，而不仅仅是填充。
             if (
                 file_features.beg[self._model_config.min_file_size_for_dl - 1]
                 == self._model_config.padding_token
