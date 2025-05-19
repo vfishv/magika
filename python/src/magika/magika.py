@@ -402,6 +402,20 @@ class Magika:
 
         NOTE: This implementation does not support extraction of `mid` features
         and `use_inputs_at_offsets`.
+
+        从输入的可搜索对象中提取特征。
+
+这实现了从可搜索对象中提取特征的 v2 版本，可搜索对象是对任何具有大小且可以在特定偏移量处读取的对象（例如文件或缓冲区）的抽象。实现此方法是为了避免将整个文件加载到内存中或扫描整个缓冲区。
+
+以下是我们所做工作的概述：
+- 我们从文件开头和结尾读取（最多）`block_size` 个字节。
+- 我们通过去除空格来规范化这些字节。
+- 我们将 `beg_size` 和 `end_size` 个字节分别视为 `beg` 和 `end` 特征。如果字节数不足，我们将使用 `padding_token` 作为填充。
+
+有关具体细节和特殊情况的处理，请参阅下方注释。
+
+注意：此实现不支持提取 `mid` 特征，以及 `use_inputs_at_offsets`。
+
         """
 
         assert beg_size < block_size
