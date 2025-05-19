@@ -474,8 +474,10 @@ class Magika:
         the buffer is bigger than required, take only the initial portion. If
         the buffer is shorter, add padding at the end.
 
-        以一个（已剥离的）缓冲区作为输入，并提取末尾的整数。这将返回一个整数列表，其长度恰好等于 end_size。
-        如果缓冲区大于所需长度，则只提取最后部分。如果缓冲区小于所需长度，则在开头添加填充
+        以一个（已剥离的）缓冲区作为输入，提取起始整数。
+这将返回一个整数列表，其长度恰好等于 beg_size。如果
+缓冲区大于所需长度，则仅提取起始部分。如果
+缓冲区较短，则在末尾添加填充。
         """
 
         if beg_size < len(beg_content):
@@ -500,6 +502,9 @@ class Magika:
         returns a list of integers whose length is exactly end_size.  If the
         buffer is bigger than required, take only the last portion. If the
         buffer is shorter, add padding at the beginning.
+
+        以一个（已剥离的）缓冲区作为输入，提取 end 个整数。这将返回一个长度恰好等于 end_size 的整数列表。
+        如果缓冲区大于所需长度，则只提取最后部分。如果缓冲区小于所需长度，则在开头添加填充。
         """
 
         if end_size < len(end_content):
