@@ -554,6 +554,10 @@ class Magika:
             # debugging and information purposes, the JSON output stores
             # both the raw DL model output and the final output we return to
             # the user.
+            """
+            除了深度学习模型的内容类型标签外，我们还允许其他逻辑覆盖此类结果。为了方便调试和提供信息，
+            JSON 输出存储了原始深度学习模型输出和我们返回给用户的最终输出。
+            """
 
             output_label, overwrite_reason = (
                 self._get_output_label_from_dl_label_and_score(
