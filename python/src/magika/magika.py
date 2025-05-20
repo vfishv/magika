@@ -814,6 +814,7 @@ class Magika:
         """
         Given a list of (path, features), return a (files_num, features_size)
         matrix encoding the predictions.
+        给定一个 (path, features) 列表，返回一个编码预测的 (files_num, features_size) 矩阵。
         """
 
         start_time = time.time()
