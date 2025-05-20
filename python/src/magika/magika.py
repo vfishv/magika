@@ -828,6 +828,8 @@ class Magika:
             if self._model_config.end_size > 0:
                 sample_bytes.extend(fs.end[-self._model_config.end_size :])
             X_bytes.append(sample_bytes)
+        # 将 X_bytes 转换为一个 NumPy 数组，数据类型指定为 np.int32。这个 X 矩阵就是准备好的、
+        # 可以直接输入到深度学习模型的数值数据。每一行代表一个文件，每一列代表一个特征值（这里是字节的整数表示）
         X = np.array(X_bytes, dtype=np.int32)
         elapsed_time = 1000 * (time.time() - start_time)
         self._log.debug(f"DL input prepared in {elapsed_time:.03f} ms")
