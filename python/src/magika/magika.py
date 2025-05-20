@@ -768,6 +768,9 @@ class Magika:
                 # If the n-th token is padding, then it means that,
                 # post-stripping, we do not have enough meaningful
                 # bytes.
+                """
+                如果第 n 个标记是填充，则意味着在剥离后，我们没有足够的有意义的字节。
+                """
                 bytes_to_read = min(seekable.size, self._model_config.block_size)
                 content = seekable.read_at(0, bytes_to_read)
                 result = self._get_result_from_few_bytes(content, path=path)
@@ -776,6 +779,7 @@ class Magika:
             else:
                 # We have enough bytes, return the features for a model
                 # prediction.
+                # 我们有足够的字节，返回用于模型预测的特征。
                 return None, file_features
 
         raise Exception("unreachable")
