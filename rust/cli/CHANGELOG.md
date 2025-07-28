@@ -1,9 +1,20 @@
 # Changelog
 
-## 0.1.3-dev
+## 0.1.4-dev
+
+### Minor
+
+- Use true colors when available
+
+## 0.1.3
+
+### Minor
+
+- Change performance tuning configuration
 
 ### Patch
 
+- Add `package.metadata.deb` for `cargo-deb` customization
 - Update dependencies
 
 ## 0.1.2

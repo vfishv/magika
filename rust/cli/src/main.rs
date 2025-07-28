@@ -21,7 +21,7 @@ use std::sync::Arc;
 
 use anyhow::{bail, ensure, Result};
 use clap::{Args, Parser};
-use colored::{ColoredString, Colorize};
+use colored::ColoredString;
 use magika::{
     ContentType, Features, FeaturesOrRuled, FileType, InferredType, OverwriteReason, Session,
     TypeInfo,
@@ -133,7 +133,7 @@ struct Experimental {
     #[arg(hide = true, long, default_value = "1")]
     batch_size: usize,
 
-    /// Number of tasks for batch parallelism (defaults to the number of CPUs).
+    /// Number of tasks for batch parallelism.
     #[arg(hide = true, long)]
     num_tasks: Option<usize>,
 
@@ -158,14 +158,25 @@ struct Experimental {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let flags = Arc::new(Flags::parse());
+    let mut flags = Flags::parse();
     ensure!(0 < flags.experimental.batch_size, "--batch-size cannot be zero");
-    let num_tasks = flags.experimental.num_tasks.unwrap_or_else(num_cpus::get);
+    // If --num-tasks is set, we don't do any guessing.
+    let num_tasks = flags.experimental.num_tasks.unwrap_or_else(|| {
+        // Otherwise, if --intra-thread is set, we use a single task.
+        if flags.experimental.intra_threads.is_some() {
+            return 1;
+        }
+        // Otherwise, we use the minimum number of intra threads (which is 2).
+        flags.experimental.intra_threads = Some(2);
+        // And as many tasks as physical CPUs with a minimum of 2.
+        std::cmp::max(2, num_cpus::get_physical())
+    });
     ensure!(0 < num_tasks, "--num-tasks cannot be zero");
     ensure!(
         flags.path.iter().filter(|x| x.to_str() == Some("-")).count() <= 1,
         "only one path can be the standard input"
     );
+    let flags = Arc::new(flags);
     if flags.colors.enable {
         colored::control::set_override(true);
     }
@@ -543,17 +554,22 @@ impl Response {
     }
 
     fn color(&self, result: ColoredString) -> ColoredString {
+        use colored::Colorize as _;
+        // We only use true colors (except for errors). If the terminal doesn't support true colors,
+        // the colored crate will automatically choose the closest one.
         match &self.result {
             Err(_) => result.bold().red(),
             Ok(x) => match x.info().group {
-                "document" => result.bold().magenta(),
-                "executable" => result.bold().green(),
-                "archive" => result.bold().red(),
-                "audio" => result.yellow(),
-                "image" => result.yellow(),
-                "video" => result.yellow(),
-                "code" => result.bold().blue(),
-                _ => result.bold(),
+                // Tailwind Colors
+                "application" => result.truecolor(0xf4, 0x3f, 0x5e), // Rose 500
+                "archive" => result.truecolor(0xf5, 0x9e, 0x0b),     // Amber 500
+                "audio" => result.truecolor(0x84, 0xcc, 0x16),       // Lime 500
+                "code" => result.truecolor(0x8b, 0x5c, 0xf6),        // Violet 500
+                "document" => result.truecolor(0x3b, 0x82, 0xf6),    // Blue 500
+                "executable" => result.truecolor(0xec, 0x48, 0x99),  // Pink 500
+                "image" => result.truecolor(0x06, 0xb6, 0xd4),       // Cyan 500
+                "video" => result.truecolor(0x10, 0xb9, 0x81),       // Emerald 500
+                _ => result.bold().truecolor(0xcc, 0xcc, 0xcc),
             },
         }
     }

@@ -25,7 +25,7 @@ PATH=$PWD/target/release:$PATH
 ( cd ../tests_data/basic
   set -x
   magika rust/code.rs
-  magika rust/code.rs --colors
+  env -u COLORTERM magika rust/code.rs --colors
   magika rust/code.rs --output-score
   magika rust/code.rs --json
   magika rust/code.rs python/code.py --json
@@ -33,6 +33,9 @@ PATH=$PWD/target/release:$PATH
   magika rust/code.rs python/code.py --jsonl
   magika rust/code.rs --mime-type
 ) > cli/output 2>&1
+
+info "Sync deb package extended description"
+grep '^Magika is a novel' ../README.md > cli/deb/extended-description
 
 if [ "$1" = --check ]; then
   if ! git diff --exit-code; then
