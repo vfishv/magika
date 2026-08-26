@@ -1,10 +1,54 @@
 # Changelog
 
-## 0.1.4-dev
+## 1.1.1-dev
+
+### Patch
+
+- Remove deprecated `package.authors` field in `Cargo.toml`
+- Update dependencies
+
+## 1.1.0
+
+### Minor
+
+- Exit successfully when the standard output is closed by the user
+
+### Patch
+
+- Join all threads before shutdown to avoid segmentation faults in ONNX Runtime
+- Update dependencies
+- Fix new clippy lints
+
+## 1.0.2
+
+### Patch
+
+- Update dependencies
+- Enable full LTO for the release profile
+
+## 1.0.1
+
+### Patch
+
+- Update dependencies
+
+## 1.0.0
+
+### Patch
+
+- Change description
+- Update dependencies
+
+## 0.1.4
 
 ### Minor
 
 - Use true colors when available
+
+### Patch
+
+- Dissociate repository from published content (see `publish.sh` script)
+- Remove `package.metadata.deb`
 
 ## 0.1.3
 

@@ -1,6 +1,12 @@
 # Magika TypeScript/JavaScript library
 
-Use Magika in the browser or in Node!
+Magika is a novel AI-powered file type detection tool that relies on the recent advance of deep learning to provide accurate detection. Under the hood, Magika employs a custom, highly optimized model that only weighs about a few MBs, and enables precise file identification within milliseconds, even when running on a single CPU. Magika has been trained and evaluated on a dataset of ~100M samples across 200+ content types (covering both binary and textual file formats), and it achieves an average ~99% accuracy on our test set.
+
+This npm package allows you to run Magika in the browser or in Node!
+
+Magika's website: [https://securityresearch.google/magika/](https://securityresearch.google/magika/).
+Magika on GitHub: [https://github.com/google/magika](https://github.com/google/magika).
+
 
 # Installing MagikaJS
 
@@ -14,7 +20,7 @@ Simple usage in Node:
 
 ```js
 import { readFile } from "fs/promises";
-import { MagikaNode as Magika } from "magika";
+import { MagikaNode as Magika } from "magika/node";
 
 const data = await readFile("some file");
 const magika = await Magika().create();
@@ -34,7 +40,7 @@ const prediction = await magika.identifyBytes(fileBytes);
 console.log(prediction);
 ```
 
-For more, see our [documentation](https://github.com/google/magika/blob/main/docs/js.md).
+For more, see our [documentation](https://securityresearch.google/magika/cli-and-bindings/js/).
 
 # Command-line tool
 
@@ -47,16 +53,16 @@ Install it with `npm install -g magika`. You can then run it by executing `magik
 ```help
 Usage: magika-js [options] <paths...>
 
-Magika JS - file type detection with ML. https://google.github.io/magika
+Magika JS - file type detection with ML. https://securityresearch.google/magika/
 
 Arguments:
   paths                                    Paths of the files to detect
 
 Options:
   --json-output                            Format output in JSON
-  --model-url <model-url>                  Model URL (default: "https://google.github.io/magika/models/standard_v3_2/model.json")
-  --model-path <model-path>                Modle file path
-  --model-config-url <model-config-url>    Model config URL (default: "https://google.github.io/magika/models/standard_v3_2/config.min.json")
+  --model-url <model-url>                  Model URL
+  --model-path <model-path>                Model file path
+  --model-config-url <model-config-url>    Model config URL
   --model-config-path <model-config-path>  Model config file path
   --by-stream                              Identify file via stream, not via bytes
   --debug                                  Output debug information
@@ -85,7 +91,7 @@ If you use this software for your research, please cite it as:
 
 MagikaJS is designed to be flexible in how you provide the model and configuration file to it.
 
-Both the Node and browser versions accept URLs to asyncronously load these two assets.
+Both the Node and browser versions accept URLs to asynchronously load these two assets.
 
 ```js
 const magika = await magika.create({

@@ -12,18 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# ruff: noqa: D104
 
-__version__ = "0.6.3-dev"
 
+from importlib.metadata import PackageNotFoundError, version
 
-import dotenv
+from magika.magika import Magika
+from magika.types.content_type_info import ContentTypeInfo
+from magika.types.content_type_label import ContentTypeLabel
+from magika.types.magika_error import MagikaError
+from magika.types.magika_prediction import MagikaPrediction
+from magika.types.magika_result import MagikaResult
+from magika.types.overwrite_reason import OverwriteReason
+from magika.types.prediction_mode import PredictionMode
+from magika.types.status import Status
 
-from magika import magika
-from magika.types import content_type_label, magika_error, prediction_mode
+try:
+    __version__ = version(__name__)
+except PackageNotFoundError:
+    # Package is not installed (e.g., during development)
+    __version__ = "unknown"
 
-Magika = magika.Magika
-MagikaError = magika_error.MagikaError
-ContentTypeLabel = content_type_label.ContentTypeLabel
-PredictionMode = prediction_mode.PredictionMode
-
-dotenv.load_dotenv(dotenv.find_dotenv())
+__all__ = [
+    "ContentTypeInfo",
+    "ContentTypeLabel",
+    "Magika",
+    "MagikaError",
+    "MagikaPrediction",
+    "MagikaResult",
+    "OverwriteReason",
+    "PredictionMode",
+    "Status",
+]

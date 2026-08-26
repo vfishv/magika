@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.1.1-dev
+
+### Patch
+
+- Remove deprecated `package.authors` field in `Cargo.toml`
+- Update dependencies
+
+## 1.1.0
+
+### Minor
+
+- Unseal `SyncInput` and `AsyncInput` for custom file-like objects
+- Support files larger than 4GB on 32-bits architectures
+
+### Patch
+
+- Update dependencies
+- Document how to handle ONNX Runtime in the final binary
+
+## 1.0.2
+
+This version is not used by the `magika` crate. It has been yanked from `crates.io` because it
+contained the version 1.0.2 of the `magika-cli` crate instead.
+
+## 1.0.1
+
+### Patch
+
+- Update dependencies
+
+## 1.0.0
+
+### Patch
+
+- Fix rustdoc nightly build by replacing deprecated `doc_auto_cfg` feature with `doc_cfg` (RFC 3631)
+
+## 0.2.2
+
+### Patch
+
+- Change description and documentation
+
 ## 0.2.1
 
 ### Patch
